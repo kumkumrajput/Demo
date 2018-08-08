@@ -1,0 +1,47 @@
+h1{
+	color:#0000FF;
+}
+
+h2{
+	color:#FF0000;
+}
+
+.heading{
+	background-color: #21776a;
+    font-size: 24px;
+    color: white;
+    height: 40px;
+    font-color: white;
+}
+
+.boxElem{
+	 background-color: lightgrey;
+    width: 300px;
+    padding: 25px;
+    margin: 25px;
+    height: 110px;
+}
+
+.boxElemSpan{
+	text-align: center; */
+    margin-left: 78px;
+    position: absolute;
+    padding-top: 10px;
+    font-size: 25px;
+    color: black;
+}
+
+.whov:hover { background-color: #00695c!important; }
+.view {
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 500px;
+}
+.secondbase {
+    background-color: rgba(255,255,255,.6); 
+    margin-top: -90px;
+}
+
+.formElem{
+	    display: block !important;
+}
