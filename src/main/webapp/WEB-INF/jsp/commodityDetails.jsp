@@ -86,9 +86,10 @@
 		                <div class="row">
 		                    <label for="Street" class="col-sm-3 col-form-label">Future Price</label>
 		                    <div class="col-sm-9">
-		                        <form:select class="form-control formElem" id="futurePriceId" path="futurePrice" >
+		                        <%-- <form:select class="form-control formElem" id="futurePriceId" path="futurePrice" >
 		                        	<form:options items="${futurePriceMap}" />
-							    </form:select>
+							    </form:select> --%>
+							    <form:input path="futurePrice"/>
 		                    </div>
 		                </div>
 		            </div>
@@ -98,9 +99,10 @@
 		                <div class="row">
 		                    <label for="Street" class="col-sm-3 col-form-label">Forward Price</label>
 		                    <div class="col-sm-9">
-		                        <form:select class="form-control formElem" id="forwardPriceId" path="forwardPrice" >
+		                        <%-- <form:select class="form-control formElem" id="forwardPriceId" path="forwardPrice" >
 		                        	<form:options items="${forwardPriceMap}" />
-							    </form:select>
+							    </form:select> --%>
+							    <form:input path="forwardPrice"/>
 		                    </div>
 		                </div>
 		            </div>
@@ -108,9 +110,10 @@
 		                <div class="row">
 		                    <label for="Street" class="col-sm-3 col-form-label">Spot Price</label>
 		                    <div class="col-sm-9">
-		                        <form:select class="form-control formElem" id="spotPriceId" path="spotPrice" >
+		                        <%-- <form:select class="form-control formElem" id="spotPriceId" path="spotPrice" >
 		                        	<form:options items="${spotPriceMap}" />
-							    </form:select>
+							    </form:select> --%>
+							    <form:input path="spotPrice"/>
 		                    </div>
 		                </div>
 		            </div>
@@ -121,9 +124,10 @@
 		                <div class="row">
 		                    <label for="Street" class="col-sm-3 col-form-label">Option Premium</label>
 		                    <div class="col-sm-9">
-		                        <form:select class="form-control formElem" id="optionPremiumId" path="optionPremium" >
+		                        <%-- <form:select class="form-control formElem" id="optionPremiumId" path="optionPremium" >
 		                        	<form:options items="${optionPremiumMap}" />
-							    </form:select>
+							    </form:select> --%>
+							    <form:input path="optionPremium"/>
 		                    </div>
 		                </div>
 		            </div>
@@ -139,9 +143,10 @@
 		                <div class="row">
 		                    <label for="Street" class="col-sm-3 col-form-label">Strike Price</label>
 		                    <div class="col-sm-9">
-		                    	 <form:select class="form-control formElem" id="strikePriceId" path="strikePrice" >
+		                    	 <%-- <form:select class="form-control formElem" id="strikePriceId" path="strikePrice" >
 		                        	<form:options items="${strikePriceMap}" />
-							    </form:select>
+							    </form:select> --%>
+							    <form:input path="strikePrice"/>
 		                    </div>
 		                </div>
 		            </div>
@@ -239,12 +244,21 @@
     	  
     	  if(action == 'listedOptions'){
     		  $('#modalBodyId').html("Agreement number 2000000000 is created.");
-    	  }else if(action == 'forwards'){
+    		  $('#commodityFormId').attr('action', '/commodity/commoditydetails/listed/submit');
+  			$('#commodityFormId').submit();
+    	  }
+    	  else if(action == 'forwards'){
     		  $('#modalBodyId').html("Agreement number 3000000000 is created.");
-    	  }else if(action == 'swaps'){
+    		  $('#commodityFormId').attr('action', '/commodity/commoditydetails/forwards/submit');
+    			$('#commodityFormId').submit();
+    	  }
+    	  else if(action == 'swaps'){
     		  $('#modalBodyId').html("Agreement number 4000000000 is created.");
-    	  }else{
+    	  }
+    	  else{
     		  $('#modalBodyId').html("Agreement number 1000000000 is created.");
+    		  $('#commodityFormId').attr('action', '/commodity/commoditydetails/futures/submit');
+    			$('#commodityFormId').submit();
     	  }
     	  $('#myModal').modal('show');
     	 /*  var submitFormUrl;

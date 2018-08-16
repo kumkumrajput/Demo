@@ -5,6 +5,8 @@ public class UserBean {
 	public String username;
 	
 	public String password;
+	
+	
 
 	/**
 	 * @return the username

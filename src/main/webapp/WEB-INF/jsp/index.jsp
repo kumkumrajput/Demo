@@ -20,8 +20,7 @@
       <section class="login-form">
         <form method="post" action="/commodity/home" role="login">
           <img src="http://i.imgur.com/RcmcLv4.png" class="img-responsive" alt="" />
-          <input type="email" name="username" placeholder="Username" required class="form-control input-lg" />
-          
+          <input type="email" name="username" placeholder="Username" required class="form-control input-lg" />          
           <input type="password" class="form-control input-lg" id="password" name="password" placeholder="Password" required="" />
           
           

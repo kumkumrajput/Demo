@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +13,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.commodity.action.FuturesAction;
 import com.commodity.bean.CommodityBean;
+import com.commodity.services.ForwardsService;
+import com.commodity.services.FuturesServices;
+import com.commodity.services.ListedServices;
 
 @Controller
 public class CommodityController {
+	
+	@Autowired
+	private FuturesAction futuresAction;
+	
+	@Autowired
+	private FuturesServices futureServices;
+	
+	@Autowired
+	private ListedServices listedServices;
+	
+	@Autowired
+	private ForwardsService ForwardsService;
 	
 	@RequestMapping(value="/commoditydetails/{param}", method = RequestMethod.GET)
 	public ModelAndView getCommodityDetailsView(@PathVariable("param") String param, HttpServletRequest request) {
@@ -23,12 +40,11 @@ public class CommodityController {
 		System.out.println("param :: " + param);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		
+				
 		if("futures".equalsIgnoreCase(param)) {
-			Map<String, String> commodityMap = new HashMap<String, String>();
-			commodityMap.put("C001", "C001");
-			commodityMap.put("C002", "C002");
-			commodityMap.put("C003", "C003");
+			
+			Map<String, String> commodityMap = futuresAction.getFuturesCId();
+			System.out.println("futures CID's :: " + commodityMap);
 			
 			Map<String, String> exchangeMap = new HashMap<String, String>();
 			exchangeMap.put("bse", "BSE");
@@ -69,8 +85,8 @@ public class CommodityController {
 			counterPartyMap.put("xyz", "XYZ");
 								
 			Map<String, String> investmentTypeMap = new HashMap<String, String>();
-			investmentTypeMap.put("Mutual Funds", "Mutual Funds");
-			investmentTypeMap.put("Life Insurance", "Life Insurance");
+			investmentTypeMap.put("MF", "MF");
+			investmentTypeMap.put("LI", "LI");
 			
 			Map<String, String> optionPremiumMap = new HashMap<String, String>();
 			optionPremiumMap.put("Option Premium", "Option Premium");
@@ -103,8 +119,8 @@ public class CommodityController {
 			counterPartyMap.put("xyz", "XYZ");
 									
 			Map<String, String> investmentTypeMap = new HashMap<String, String>();
-			investmentTypeMap.put("Mutual Funds", "Mutual Funds");
-			investmentTypeMap.put("Life Insurance", "Life Insurance");
+			investmentTypeMap.put("MF", "MF");
+			investmentTypeMap.put("LF", "LF");
 			
 			//1.1 added forward price & spot price
 			Map<String, String> forwardPriceMap = new HashMap<String, String>();
@@ -143,8 +159,8 @@ public class CommodityController {
 			
 					
 			Map<String, String> tradeTypeMap = new HashMap<String, String>();
-			tradeTypeMap.put("Mutual Funds", "Mutual Funds");
-			tradeTypeMap.put("Life Insurance", "Life Insurance");
+			tradeTypeMap.put("MF", "MF");
+			tradeTypeMap.put("LI", "LI");
 			
 			//1.1 added commodity fixed price & commodity floating price
 			Map<String, String> commodityfixedPriceMap = new HashMap<String, String>();
@@ -172,16 +188,53 @@ public class CommodityController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="/commoditydetails/submit", method = RequestMethod.GET)
-	public ModelAndView submitFormData(@ModelAttribute("commodityBean") CommodityBean commodityBean) {
-		System.out.println("Submit commodityBean :: " + commodityBean);
+	//for submission of Futures	
+	@RequestMapping(value="/commoditydetails/futures/submit", method = RequestMethod.POST)
+	public ModelAndView submitFutureFormData(@ModelAttribute("commodityBean") CommodityBean commodityBean) {
+		System.out.println("Submit Futures commodityBean :: " + commodityBean);
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
+		boolean isInsert = futureServices.saveAll(commodityBean);
+		System.out.println("Futures is insert :: " + isInsert);
 		
 		modelAndView.addObject("commodityBean", new CommodityBean());
 		modelAndView.setViewName("commodityDetails");
 		return modelAndView;
 	}
+	
+	//for submission of Listed Options	
+		@RequestMapping(value="/commoditydetails/listed/submit", method = RequestMethod.POST)
+		public ModelAndView submitListedFormData(@ModelAttribute("commodityBean") CommodityBean commodityBean) {
+			System.out.println("Submit Listed commodityBean :: " + commodityBean);
+			
+			ModelAndView modelAndView = new ModelAndView();
+			
+			boolean isInsert = listedServices.saveAll(commodityBean);
+			System.out.println("Listed Options is insert :: " + isInsert);
+			
+			modelAndView.addObject("commodityBean", new CommodityBean());
+			modelAndView.setViewName("commodityDetails");
+			return modelAndView;
+		}
+		
+		//for submission of Forwards	
+				@RequestMapping(value="/commoditydetails/forwards/submit", method = RequestMethod.POST)
+				public ModelAndView submitForwardsFormData(@ModelAttribute("commodityBean") CommodityBean commodityBean) {
+					System.out.println("Submit Forwards commodityBean :: " + commodityBean);
+					
+					ModelAndView modelAndView = new ModelAndView();
+					
+					boolean isInsert = ForwardsService.saveAll(commodityBean);
+					System.out.println("Forwards is insert :: " + isInsert);
+					
+					modelAndView.addObject("commodityBean", new CommodityBean());
+					modelAndView.setViewName("commodityDetails");
+					return modelAndView;
+				}
+			
+	
+	
 	
 	@RequestMapping(value="/commoditydetails/getHomePage", method = RequestMethod.GET)
 	public String getHomePage() {

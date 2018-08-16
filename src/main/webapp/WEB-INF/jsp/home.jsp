@@ -49,9 +49,9 @@
           <div class="card">
             <div class="boxElem"><span class="boxElemSpan">OTC Options </span></div>
           </div>
-          <div class="card">
-            <div class="boxElem"><span class="boxElemSpan">Data Management </span></div>
-          </div>
+<!--           <div class="card"> -->
+<!--             <div class="boxElem"><span class="boxElemSpan">Data Management </span></div> -->
+<!--           </div> -->
         </div>
         
         <div class="row" style="    padding-bottom: 10px;">
@@ -68,6 +68,23 @@
             <div class="boxElem"><span class="boxElemSpan">Market Prices </span></div>
           </div>
           </div>
+          
+          <div class="row" style="    padding-bottom: 10px;">
+		  <div class="col heading">Data Management</div>
+		</div>
+		<div class="row">
+		<div class="card">
+            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/data/commodityid">Commodity ID</a> </span></div>
+          </div>
+          <div class="card">
+            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/data/counterparty/masterdata">CounterParty MasterData</a> </span></div>
+          </div>
+          <div class="card">
+            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/data/pricedata">Commodity Price Data</a> </span></div>
+          </div>
+          </div>
+		
+		
       </div>
     </div>
     
