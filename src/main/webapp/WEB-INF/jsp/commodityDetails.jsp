@@ -10,17 +10,23 @@
     <meta name="author" content="">
     
     <c:url value="/css/album.css" var="albumCss" />
+    <c:url value="/css/datatable.min.css" var="dataTableCss" />
     <c:url value="/css/main.css" var="mainCss" />
-    <c:url value="/js/holder.min.js" var="holderjs" />
-    <c:url value="/js/bootstrap/bootstrap.min.js" var="bootstrapMinJS" />
-     <c:url value="/css/bootstrap/mdb.min.css" var="mdbCss" />
+    <c:url value="/css/bootstrap/mdb.min.css" var="mdbCss" />
      <c:url value="/css/bootstrap/bootstrap.min.css" var="bootstrapMinCss" />
     
+    <c:url value="/js/datatable/datatable.min.js" var="datatableMinJS"/>
+    <c:url value="/js/holder.min.js" var="holderjs" />
+    <c:url value="/js/jquery-3.3.1.js" var="jqueryJS" />
+    <c:url value="/js/jquery-3.3.1.min.js" var="jqueryMinJS" />
+    <c:url value="/js/bootstrap/bootstrap.min.js" var="bootstrapMinJS" />
+     
     <link href="${mainCss}" rel="stylesheet" />
     <link href="${bootstrapMinCss}" rel="stylesheet" />
 	<link href="${albumCss}" rel="stylesheet" />
 	<link href="${fontAwesomeCss}" rel="stylesheet" />
 	<link href="${mdbCss}" rel="stylesheet" />
+	<link href="${dataTableCss}" rel="stylesheet" />
 	
 </head>
 
@@ -216,13 +222,111 @@
 				<div class="row" style="float:right;">
 		        <button type="button" class="btn btn-primary" onclick="javascript:submitTask();">Save</button>
 		        </div>
+		        
+		        <div class="row" style="padding-bottom: 10px; margin-top:150px;">
+				  <div class="col heading">Records</div>
+				</div>
+				
+				<c:if test="${paramIdentifier eq 'futures'}">
+				<div class="row">
+					<table id="recordsDTableId" class="display" style="width:100%">
+				        <thead>
+				            <tr>
+				                <th>Acknowledge Number</th>
+				                <th>Commodity Id</th>
+				                <th>Counter Party</th>
+				                <th>Start Date</th>
+				                <th>End Date</th>
+				                <th>Future Price</th>
+				                <th>Type of Investment</th>
+				                <th>Contract Date</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				        </tbody>
+		        	</table>
+				</div>
+				</c:if>
+				
+				<c:if test="${paramIdentifier eq 'listedOptions'}">
+				<div class="row">
+					<table id="recordsDTableId" class="display" style="width:100%">
+				        <thead>
+				            <tr>
+				                <th>Acknowledge Number</th>
+				                <th>Commodity Id</th>
+				                <th>Exchange</th>
+				                <th>Counter Party</th>
+				                <th>Start Date</th>
+				                <th>Maturity Date</th>
+				                <th>Type of Investment</th>
+				                <th>Contract Date</th>
+				                <th>Option Premium</th>
+				                <th>Strike Price</th>
+				                <th>Call/Putt</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				        </tbody>
+		        	</table>
+				</div>
+				</c:if>
+				
+				<c:if test="${paramIdentifier eq 'swaps'}">
+				<div class="row">
+					<table id="recordsDTableId" class="display" style="width:100%">
+				        <thead>
+				            <tr>
+				                <th>Acknowledge Number</th>
+				                <th>Commodity Id</th>
+				                <th>Exchange</th>
+				                <th>Counter Party</th>
+				                <th>Start Date</th>
+				                <th>End Date</th>				                
+				                <th>Type of Trade</th>
+				                <th>Contract Date</th>				                
+				                 <th>Commodity Fixed Price</th>
+				                <th>Effective Date Of Buying</th>				                
+				                <th>Commodity Floating Price</th>
+				                <th>Effective Date Of Selling</th>
+				                
+				            </tr>
+				        </thead>
+				        <tbody>
+				        </tbody>
+		        	</table>
+				</div>
+				</c:if>
+				
+				<c:if test="${paramIdentifier eq 'forwards'}">
+				<div class="row">
+					<table id="recordsDTableId" class="display" style="width:100%">
+				        <thead>
+				            <tr>
+				                <th>Acknowledge Number</th>
+				                <th>Commodity Id</th>
+				                <th>Exchange</th>
+				                <th>Counter Party</th>
+				                <th>Start Date</th>
+				                <th>End Date</th>
+				                <th>Type of Investment</th>
+				                <th>Contract Date</th>
+				                <th>Forward Price</th>
+				                <th>Spot Price</th>
+				                
+				            </tr>
+				        </thead>
+				        <tbody>
+				        </tbody>
+		        	</table>
+				</div>
+				</c:if>
       </div>
       </form:form>
     </div>
     
     <!-- include popup -->
     <jsp:include page="popup.jsp"></jsp:include>
-    
     
     
     <!-- Bootstrap core JavaScript
@@ -232,11 +336,173 @@
     <script>window.jQuery || document.write('<script src="webjars/bootstrap/4.0.0/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="${holderjs}"></script>
+    <script src="${jqueryJS}"></script>
+    <script src="${jqueryMinJS}"></script>
+     <script src="${bootstrapMinJS}"></script>
+    <script src="${datatableMinJS}"></script>
+    
     <script>
+    var futuresData;
+    var paramValue = '${paramIdentifier}';
+    console.log('----param value -----' + paramValue);
       $(function () {
         Holder.addTheme("thumb", { background: "#55595c", foreground: "#eceeef", text: "Thumbnail" });
       });
       
+      $(document).ready(function() {
+    	  getDataTableData();
+    	} );
+
+      function getFuturesDataTable(futuresData){
+    	  var table = $('#recordsDTableId').DataTable({
+  	        "data": futuresData,
+  	        "destroy":true,
+  	        "pagingType": "full_numbers",
+  	         "oLanguage": {
+  	                "oPaginate": {
+  	                    "sFirst": "First",
+  	                    "sLast": "Last",
+  	                    "sNext": "Next",
+  	                    "sPrevious": "Previous"
+  	                }
+  	            },
+  	        "columns": [
+  	            { "data": "ack" },
+  	            { "data": "commodityId" },
+  	            { "data": "counterParty" },
+  	            { "data": "startDate" },
+  	            { "data": "endDate"},
+  	            { "data": "futurePrice" },
+  	            { "data": "investType" },
+  	            { "data": "contractDate" }
+  	        ]
+  	    });
+      }
+      
+      
+      function getListedOptionsDataTable(futuresData){
+    	  var table = $('#recordsDTableId').DataTable({
+  	        "data": futuresData,
+  	        "destroy":true,
+  	        "pagingType": "full_numbers",
+  	         "oLanguage": {
+  	                "oPaginate": {
+  	                    "sFirst": "First",
+  	                    "sLast": "Last",
+  	                    "sNext": "Next",
+  	                    "sPrevious": "Previous"
+  	                }
+  	            },
+  	        "columns": [
+  	            { "data": "ack" },
+  	            { "data": "commodityId" },
+  	          	{ "data": "exchange" },
+  	            { "data": "counterParty" },
+  	            { "data": "startDate" },
+  	            { "data": "maturityDate"},
+  	            { "data": "investType" },
+  	            { "data": "contractDate" },
+  	          	{ "data": "option" },
+  	          	{ "data": "strikePrice" },
+	          	{ "data": "callPutt" }
+  	        ]
+  	    });
+      }
+      
+      function getForwardsDataTable(futuresData){
+    	  var table = $('#recordsDTableId').DataTable({
+  	        "data": futuresData,
+  	        "destroy":true,
+  	        "pagingType": "full_numbers",
+  	         "oLanguage": {
+  	                "oPaginate": {
+  	                    "sFirst": "First",
+  	                    "sLast": "Last",
+  	                    "sNext": "Next",
+  	                    "sPrevious": "Previous"
+  	                }
+  	            },
+  	        "columns": [
+  	            { "data": "ack" },
+  	            { "data": "commodityId" },
+  	            { "data": "exchange" },
+  	            { "data": "counterParty" },
+  	            { "data": "startDate" },
+  	            { "data": "endDate"},
+  	            { "data": "investType" },
+	            { "data": "contractDate" },
+  	            { "data": "forwardPrice" },
+  	            { "data": "spotPrice" }
+  	            
+  	        ]
+  	    });
+      }
+      
+      function getSwapsDataTable(futuresData){
+    	  var table = $('#recordsDTableId').DataTable({
+  	        "data": futuresData,
+  	        "destroy":true,
+  	        "pagingType": "full_numbers",
+  	         "oLanguage": {
+  	                "oPaginate": {
+  	                    "sFirst": "First",
+  	                    "sLast": "Last",
+  	                    "sNext": "Next",
+  	                    "sPrevious": "Previous"
+  	                }
+  	            },
+  	        "columns": [
+  	            { "data": "ack" },
+  	            { "data": "commodityId" },
+  	            { "data": "exchange" },
+  	            { "data": "counterParty" },
+  	            { "data": "startDate" },
+  	            { "data": "endDate"},
+  	            { "data": "tradeType" },
+	            { "data": "contractDate" },  	          
+  	            { "data": "commFixed" },
+  	            { "data": "eDateBuy" },
+  	            { "data": "commFloat" },
+  	            { "data": "eDateSell" }
+  	        ]
+  	    });
+      }
+      function getDataTableData(){
+    	  debugger;
+    	  var finalUrl;
+    	  
+    	  if(paramValue == 'futures'){
+    		  finalUrl = "http://localhost:8080/commodity/api/futures/getdata";
+    	  }else if(paramValue == 'listedOptions'){
+    		  finalUrl = "http://localhost:8080/commodity/api/listed/getdata";
+    	  }else if(paramValue == 'forwards'){
+    		  finalUrl = "http://localhost:8080/commodity/api/forwards/getdata";
+    	  }else if(paramValue == 'swaps'){
+    		  finalUrl = "http://localhost:8080/commodity/api/swaps/getdata";
+    	  }
+    	  $.ajax({
+  			type : "GET",
+  			url : finalUrl,
+  			success: function(result){
+  				debugger;
+  				console.log(result);
+  				console.log(result);
+  				console.log(result.data);
+  				if(paramValue == 'futures'){
+  					getFuturesDataTable(result.data.futures);
+  	    	  }else if(paramValue == 'listedOptions'){
+  	    		getListedOptionsDataTable(result.data.listedOptions);
+  	    	  }else if(paramValue == 'forwards'){
+  	    		getForwardsDataTable(result.data.forwards);
+  	    	  }else if(paramValue == 'swaps'){
+  	    		getSwapsDataTable(result.data.swaps);
+  	    	  }
+  			},
+  			error : function(e) {
+  				console.log("ERROR: ", e);
+  			}
+  		});	
+      }
       function submitTask(){
     	  console.log('submit task');
     	  var action = $('#taskNameId').val();
@@ -254,6 +520,8 @@
     	  }
     	  else if(action == 'swaps'){
     		  $('#modalBodyId').html("Agreement number 4000000000 is created.");
+    		  $('#commodityFormId').attr('action', '/commodity/commoditydetails/swaps/submit');
+  			$('#commodityFormId').submit();
     	  }
     	  else{
     		  $('#modalBodyId').html("Agreement number 1000000000 is created.");
@@ -274,7 +542,7 @@
 		//	$.post('/commodity/commoditydetails/submit', $("#commodityFormId").serialize());
       }
     </script>
-    <script src="${bootstrapMinJS}"></script>
+    
 </body>
 
 </html>

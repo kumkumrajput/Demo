@@ -1,24 +1,22 @@
 package com.commodity.bean;
 
-import java.util.List;
-
 public class BuyingSideBean {
 	
-	private List<String> commodityFixedPrice;
+	private String commodityFixedPrice;
 	
 	private String effectiveDate;
 
 	/**
 	 * @return the commodityFixedPrice
 	 */
-	public List<String> getCommodityFixedPrice() {
+	public String getCommodityFixedPrice() {
 		return commodityFixedPrice;
 	}
 
 	/**
 	 * @param commodityFixedPrice the commodityFixedPrice to set
 	 */
-	public void setCommodityFixedPrice(List<String> commodityFixedPrice) {
+	public void setCommodityFixedPrice(String commodityFixedPrice) {
 		this.commodityFixedPrice = commodityFixedPrice;
 	}
 
