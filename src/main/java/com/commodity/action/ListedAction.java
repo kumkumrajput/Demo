@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.commodity.domain.model.DmCommodityId;
 import com.commodity.domain.model.DmMasterData;
+import com.commodity.domain.model.Futures;
 import com.commodity.domain.model.Listed;
 import com.commodity.services.DmCommodityIdServices;
 import com.commodity.services.DmMasterDataServices;
@@ -78,6 +79,11 @@ public class ListedAction {
 		}
 		
 		return listedCounterMap;
+	}
+	
+	public Listed getListedById(Integer id) {
+		Listed l = listedServices.getlistedOptionsById(id);
+		return l;
 	}
 	
 

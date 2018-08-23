@@ -23,6 +23,9 @@ public class ListedServicesImpl implements ListedServices{
 		
 		try {
 			if(null!=bean) {
+				if(null != bean.getPrimaryKey() && !"".equalsIgnoreCase(bean.getPrimaryKey())) {
+					listed.setId(Integer.valueOf(bean.getPrimaryKey()));
+				}
 				listed.setCommodityId(bean.getCommodityId());
 				listed.setContractDate(bean.getContractDataBean().getContractDate());
 				listed.setCounterParty(bean.getCounterParty());
@@ -30,6 +33,7 @@ public class ListedServicesImpl implements ListedServices{
 				listed.setInvestType(bean.getContractDataBean().getTypeOfInvestment());
 				listed.setMaturityDate(bean.getMaturity());
 				listed.setStartDate(bean.getStartDate());
+				listed.setAck(bean.getAgreementNumber());
 				//listed.setCallPutt(bean.);
 				if(null != bean.getOptionPremium() && !bean.getOptionPremium().isEmpty()) {
 					listed.setOption((Float.valueOf(bean.getOptionPremium())));
@@ -54,6 +58,12 @@ public class ListedServicesImpl implements ListedServices{
 	public Iterable<Listed> findAll() {
 		Iterable<Listed> iterable = listedRepository.findAll();
 		return iterable;
+	}
+	
+	@Override
+	public Listed getlistedOptionsById(Integer Id) {
+		Listed l = listedRepository.findOne(Id);
+		return l;
 	}
 
 }

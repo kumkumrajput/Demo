@@ -74,4 +74,9 @@ public class FuturesAction {
 		
 		return futureCounterMap;
 	}
+	
+	public Futures getFuturesById(Integer id) {
+		Futures f = futureServices.getFuturesById(id);
+		return f;
+	}
 }

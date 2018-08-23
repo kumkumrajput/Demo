@@ -21,11 +21,15 @@ public class SwapsServiceImpl implements SwapsService {
 		Swaps swaps= new Swaps();
 		try {
 			if(null!=bean) {
+				if(null != bean.getPrimaryKey() && !"".equalsIgnoreCase(bean.getPrimaryKey())) {
+					swaps.setId(Integer.valueOf(bean.getPrimaryKey()));
+				}
 				swaps.setCommodityId(bean.getCommodityId());
 				swaps.setExchange(bean.getExchange());
 				swaps.setCounterParty(bean.getCounterParty());
 				swaps.setStartDate(bean.getStartDate());
 				swaps.setEndDate(bean.getEndDate());
+				swaps.setAck(bean.getAgreementNumber());
 				
 				swaps.setContractDate(bean.getContractDataBean().getContractDate());
 				swaps.setTradeType(bean.getContractDataBean().getTypeOfTrade());

@@ -8,5 +8,7 @@ public interface FuturesServices {
 	public boolean saveAll(CommodityBean bean);
 	
 	public Iterable<Futures> findAll();
+	
+	public Futures getFuturesById(Integer id);
 
 }

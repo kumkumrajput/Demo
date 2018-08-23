@@ -9,4 +9,6 @@ public interface ListedServices {
 
 	public Iterable<Listed> findAll();
 
+	public Listed getlistedOptionsById(Integer Id);
+
 }

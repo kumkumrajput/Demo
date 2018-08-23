@@ -4,6 +4,8 @@ import java.util.Map;
 
 public class CommodityBean {
 	
+	private String primaryKey;
+	
 	private String commodityId;
 	
 	private Map<String, String> commodityIdMap;
@@ -35,63 +37,36 @@ public class CommodityBean {
 	
 	private BuyingSideBean buyingSideBean;
 	
+	private String agreementNumber;
+	
 	private SellingSideDataBean sellingSideDataBean;
-	
-	
+
 	/**
-	 * @return the strikePriceOption
+	 * @return the primaryKey
 	 */
-	public String getStrikePriceOption() {
-		return strikePriceOption;
+	public String getPrimaryKey() {
+		return primaryKey;
 	}
 
 	/**
-	 * @param strikePriceOption the strikePriceOption to set
+	 * @param primaryKey the primaryKey to set
 	 */
-	public void setStrikePriceOption(String strikePriceOption) {
-		this.strikePriceOption = strikePriceOption;
+	public void setPrimaryKey(String primaryKey) {
+		this.primaryKey = primaryKey;
 	}
 
 	/**
-	 * @return the maturity
+	 * @return the commodityId
 	 */
-	public String getMaturity() {
-		return maturity;
+	public String getCommodityId() {
+		return commodityId;
 	}
 
 	/**
-	 * @param maturity the maturity to set
+	 * @param commodityId the commodityId to set
 	 */
-	public void setMaturity(String maturity) {
-		this.maturity = maturity;
-	}
-
-	/**
-	 * @return the strikePrice
-	 */
-	public String getStrikePrice() {
-		return strikePrice;
-	}
-
-	/**
-	 * @param strikePrice the strikePrice to set
-	 */
-	public void setStrikePrice(String strikePrice) {
-		this.strikePrice = strikePrice;
-	}
-
-	/**
-	 * @return the optionPremium
-	 */
-	public String getOptionPremium() {
-		return optionPremium;
-	}
-
-	/**
-	 * @param optionPremium the optionPremium to set
-	 */
-	public void setOptionPremium(String optionPremium) {
-		this.optionPremium = optionPremium;
+	public void setCommodityId(String commodityId) {
+		this.commodityId = commodityId;
 	}
 
 	/**
@@ -106,36 +81,6 @@ public class CommodityBean {
 	 */
 	public void setCommodityIdMap(Map<String, String> commodityIdMap) {
 		this.commodityIdMap = commodityIdMap;
-	}
-
-	/**
-	 * @return the commodityId
-	 */
-	public String getCommodityId() {
-		return commodityId;
-	}
-
-	public String getForwardPrice() {
-		return forwardPrice;
-	}
-
-	public void setForwardPrice(String forwardPrice) {
-		this.forwardPrice = forwardPrice;
-	}
-
-	public String getSpotPrice() {
-		return spotPrice;
-	}
-
-	public void setSpotPrice(String spotPrice) {
-		this.spotPrice = spotPrice;
-	}
-
-	/**
-	 * @param commodityId the commodityId to set
-	 */
-	public void setCommodityId(String commodityId) {
-		this.commodityId = commodityId;
 	}
 
 	/**
@@ -209,6 +154,90 @@ public class CommodityBean {
 	}
 
 	/**
+	 * @return the maturity
+	 */
+	public String getMaturity() {
+		return maturity;
+	}
+
+	/**
+	 * @param maturity the maturity to set
+	 */
+	public void setMaturity(String maturity) {
+		this.maturity = maturity;
+	}
+
+	/**
+	 * @return the strikePrice
+	 */
+	public String getStrikePrice() {
+		return strikePrice;
+	}
+
+	/**
+	 * @param strikePrice the strikePrice to set
+	 */
+	public void setStrikePrice(String strikePrice) {
+		this.strikePrice = strikePrice;
+	}
+
+	/**
+	 * @return the optionPremium
+	 */
+	public String getOptionPremium() {
+		return optionPremium;
+	}
+
+	/**
+	 * @param optionPremium the optionPremium to set
+	 */
+	public void setOptionPremium(String optionPremium) {
+		this.optionPremium = optionPremium;
+	}
+
+	/**
+	 * @return the forwardPrice
+	 */
+	public String getForwardPrice() {
+		return forwardPrice;
+	}
+
+	/**
+	 * @param forwardPrice the forwardPrice to set
+	 */
+	public void setForwardPrice(String forwardPrice) {
+		this.forwardPrice = forwardPrice;
+	}
+
+	/**
+	 * @return the spotPrice
+	 */
+	public String getSpotPrice() {
+		return spotPrice;
+	}
+
+	/**
+	 * @param spotPrice the spotPrice to set
+	 */
+	public void setSpotPrice(String spotPrice) {
+		this.spotPrice = spotPrice;
+	}
+
+	/**
+	 * @return the strikePriceOption
+	 */
+	public String getStrikePriceOption() {
+		return strikePriceOption;
+	}
+
+	/**
+	 * @param strikePriceOption the strikePriceOption to set
+	 */
+	public void setStrikePriceOption(String strikePriceOption) {
+		this.strikePriceOption = strikePriceOption;
+	}
+
+	/**
 	 * @return the contractDataBean
 	 */
 	public ContractDataBean getContractDataBean() {
@@ -237,6 +266,20 @@ public class CommodityBean {
 	}
 
 	/**
+	 * @return the agreementNumber
+	 */
+	public String getAgreementNumber() {
+		return agreementNumber;
+	}
+
+	/**
+	 * @param agreementNumber the agreementNumber to set
+	 */
+	public void setAgreementNumber(String agreementNumber) {
+		this.agreementNumber = agreementNumber;
+	}
+
+	/**
 	 * @return the sellingSideDataBean
 	 */
 	public SellingSideDataBean getSellingSideDataBean() {
@@ -255,10 +298,12 @@ public class CommodityBean {
 	 */
 	@Override
 	public String toString() {
-		return "CommodityBean [commodityId=" + commodityId + ", commodityIdMap=" + commodityIdMap + ", exchange="
-				+ exchange + ", counterParty=" + counterParty + ", futurePrice=" + futurePrice + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", maturity=" + maturity + ", strikePrice=" + strikePrice
-				+ ",forwardPrice="+forwardPrice+", spotPrice="+spotPrice+", optionPremium=" + optionPremium + ", contractDataBean=" + contractDataBean + ", buyingSideBean="
-				+ buyingSideBean + ", sellingSideDataBean=" + sellingSideDataBean + "]";
+		return "CommodityBean [primaryKey=" + primaryKey + ", commodityId=" + commodityId + ", commodityIdMap="
+				+ commodityIdMap + ", exchange=" + exchange + ", counterParty=" + counterParty + ", futurePrice="
+				+ futurePrice + ", startDate=" + startDate + ", endDate=" + endDate + ", maturity=" + maturity
+				+ ", strikePrice=" + strikePrice + ", optionPremium=" + optionPremium + ", forwardPrice=" + forwardPrice
+				+ ", spotPrice=" + spotPrice + ", strikePriceOption=" + strikePriceOption + ", contractDataBean="
+				+ contractDataBean + ", buyingSideBean=" + buyingSideBean + ", agreementNumber=" + agreementNumber
+				+ ", sellingSideDataBean=" + sellingSideDataBean + "]";
 	}
 }

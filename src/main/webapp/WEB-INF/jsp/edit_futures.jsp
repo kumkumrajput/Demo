@@ -36,7 +36,6 @@
     <div class="album text-muted">
     <form:form class="form-horizontal" method="POST" modelAttribute="commodityBean" id="commodityFormId">
     	<input type="hidden" name="taskName" id="taskNameId" value="${paramIdentifier}"/>
-    	<form:input type="hidden" name="agreementNo" id="agreementNoId" path="agreementNumber" value="${agreementNumber}"/>
       <div class="container">
       	<div class="row" style="    padding-bottom: 10px;">
 		  <div class="col heading">Parameters</div>
@@ -46,20 +45,9 @@
 		                <div class="row">
 		                    <label for="first_name" class="col-sm-3 col-form-label">Commodity ID</label>
 		                    <div class="col-sm-9">
-		                    	<c:choose>
-							         <c:when test = "${editParam eq 'edit'}">
-							         	<form:input type="hidden" path="primaryKey"/>
-							           <form:select class="form-control formElem" id="commodityId" path="commodityId" readonly="true">
-				                        	<form:options items="${commodityIdMap}" />
-									    </form:select>
-							         </c:when>
-							         
-							         <c:otherwise>
-							           <form:select class="form-control formElem" id="commodityId" path="commodityId">
-				                        	<form:options items="${commodityIdMap}" />
-									    </form:select>
-							         </c:otherwise>
-							      </c:choose>
+		                        <form:select class="form-control formElem" id="commodityId" path="commodityId">
+		                        	<form:options items="${commodityIdMap}" />
+							    </form:select>
 		                    </div>
 		                </div>
 		            </div>
@@ -81,7 +69,6 @@
 		                    </div>
 		                </div>
 		            </div>
-		            <c:if test="${paramIdentifier ne 'listedOptions'}">
 		            <div class="form-group form-group-sm col-sm-6">
 		                <div class="row">
 		                    <label for="City" class="col-sm-3 col-form-label">End Date</label>
@@ -90,24 +77,13 @@
 		                    </div>
 		                </div>
 		            </div>
-		            </c:if>
 		             <div class="form-group form-group-sm col-sm-6">
 		                <div class="row">
 		                    <label for="Street" class="col-sm-3 col-form-label">Counter Party</label>
 		                    <div class="col-sm-9">
-		                    	<c:choose>
-							         <c:when test = "${editParam eq 'edit'}">
-							           <form:select class="form-control formElem" id="counterPartyId" path="counterParty" readonly="true">
-				                        	<form:options items="${counterPartyMap}" />
-									    </form:select>
-							         </c:when>
-							         
-							         <c:otherwise>
-							           <form:select class="form-control formElem" id="counterPartyId" path="counterParty" >
-				                        	<form:options items="${counterPartyMap}" />
-									    </form:select>
-							         </c:otherwise>
-							      </c:choose>
+		                        <form:select class="form-control formElem" id="counterPartyId" path="counterParty" >
+		                        	<form:options items="${counterPartyMap}" />
+							    </form:select>
 		                    </div>
 		                </div>
 		            </div>
@@ -374,19 +350,8 @@
       });
       
       $(document).ready(function() {
-    	  //getDataTableData();
-    	  editParams();
-    	});
-      
-      function editParams(){
-    	  var obj = '${EDIT_OBJECT}';
-    	  console.log('Obj :: ' + obj);
-    	  
-    	  var jsonObj = JSON.stringify(obj);
-    	  console.log(' josn obj :: ' + jsonObj);
-    	  console.log(' josn obj commodity Id :: ' + jsonObj.commodityId);
-    	  console.log(' josn obj commodity Id :: ' + jsonObj["commodityId"]);
-      }
+    	  getDataTableData();
+    	} );
 
       function getFuturesDataTable(futuresData){
     	  var table = $('#recordsDTableId').DataTable({
@@ -543,7 +508,7 @@
     	  var action = $('#taskNameId').val();
     	  console.log('--action---:: ' + action);
     	  
-    	/*   if(action == 'listedOptions'){
+    	  if(action == 'listedOptions'){
     		  $('#modalBodyId').html("Agreement number 2000000000 is created.");
     		  $('#commodityFormId').attr('action', '/commodity/commoditydetails/listed/submit');
   			$('#commodityFormId').submit();
@@ -563,53 +528,18 @@
     		  $('#commodityFormId').attr('action', '/commodity/commoditydetails/futures/submit');
     			$('#commodityFormId').submit();
     	  }
-    	  $('#myModal').modal('show'); */
-    	  
-    	  var finalSubmitUrl;
-    	  var agreementNo = $('#agreementNoId').val();
-    	  console.log('final sending agreement no :: ' + agreementNo);
-    	  
-    	  var msg = "Agreement number " + agreementNo + "  is created.";
-    	  console.log('msg :: ' + msg);
-    	  if(action == 'listedOptions'){
-    		  finalSubmitUrl =  '/commodity/commoditydetails/listed/submit';
-    	  }
-    	  else if(action == 'forwards'){
-    		  finalSubmitUrl = '/commodity/commoditydetails/forwards/submit';
-    	  }
-    	  else if(action == 'swaps'){
-    		  finalSubmitUrl = '/commodity/commoditydetails/swaps/submit';
-    	  }
-    	  else{
-    		  finalSubmitUrl = '/commodity/commoditydetails/futures/submit';
-    	  }
-    	  
-    	  var str = $("#commodityFormId").serialize();
-
-    	  $.ajax({
-    	      type:"post",
-    	      data: str,
-    	      url: finalSubmitUrl,
-    	      async: false,
-    	      dataType: "json",
-    	      success: function(){
-    	    	  console.log('--success--');
-    	    	  /* _______________ ATTENTION: NEED TO FIX IT___________
-    	    	  $('#modalBodyId').html(msg);
-    	    	  $('#myModal').modal('show'); */
-    	      }
-    	  });
-    	  
-    	  console.log('--success-12345-');
-    	  if(agreementNo != ''){
-    		  $('#modalBodyId').html(msg);
-        	  $('#myModal').modal('show');  
-    	  }else{
-    		  $('#modalHeadingId').html('Error');
-    		  $('#modalBodyId').html("Error ocurred. Please contact your Administration.");
-        	  $('#myModal').modal('show'); 
-    	  }
-    	  
+    	  $('#myModal').modal('show');
+    	 /*  var submitFormUrl;
+    	 $.ajax({
+				url : '/commodity/commoditydetails/submit',
+				type : "POST",
+				success : function(data, textStatus, jqXHR) {
+					console.log('data :: ' + data);
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+				}
+			});  */
+		//	$.post('/commodity/commoditydetails/submit', $("#commodityFormId").serialize());
       }
     </script>
     

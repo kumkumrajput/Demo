@@ -22,10 +22,13 @@ public class FuturesServicesImpl implements FuturesServices {
 		try {
 
 			if (null != bean) {
+				if(null != bean.getPrimaryKey() && !"".equalsIgnoreCase(bean.getPrimaryKey())) {
+					futures.setId(Integer.valueOf(bean.getPrimaryKey()));
+				}
 				futures.setCommodityId(bean.getCommodityId());
 				futures.setCounterParty(bean.getCounterParty());
 				futures.setContractDate(bean.getContractDataBean().getContractDate());
-				// futures setAck();
+				futures.setAck(bean.getAgreementNumber());
 				futures.setEndDate(bean.getEndDate());
 				futures.setExchange(bean.getExchange());
 
@@ -52,6 +55,11 @@ public class FuturesServicesImpl implements FuturesServices {
 	public Iterable<Futures> findAll() {
 		Iterable<Futures> iterable = futuresRepository.findAll();
 		return iterable;
+	}
 
+	@Override
+	public Futures getFuturesById(Integer Id) {
+		Futures futures = futuresRepository.findOne(Id);
+		return futures;
 	}
 }

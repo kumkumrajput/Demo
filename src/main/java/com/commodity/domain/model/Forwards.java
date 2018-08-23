@@ -40,7 +40,7 @@ public class Forwards {
 	 * @return the id
 	 */
 	@Id
-    @Column(name="pk_futures_tb")
+    @Column(name="pk_forwards_tb")
     @GeneratedValue(strategy= GenerationType.AUTO)
 	public Integer getId() {
 		return id;

@@ -9,5 +9,7 @@ public interface ForwardsService {
 
 	public Iterable<Forwards> findAll();
 
+	public Forwards getForwardsById(Integer Id);
+
 
 }

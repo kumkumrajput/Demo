@@ -9,19 +9,22 @@ import com.commodity.domain.repository.ForwardsRepository;
 import com.commodity.services.ForwardsService;
 
 @Service
-public class ForwardsServiceImpl implements ForwardsService{
-	
+public class ForwardsServiceImpl implements ForwardsService {
+
 	@Autowired
 	private ForwardsRepository forwardsRepository;
 
 	@Override
 	public boolean saveAll(CommodityBean bean) {
 		// TODO Auto-generated method stub
-		boolean isInsert=false;
-		Forwards forwards=new Forwards();
-		
+		boolean isInsert = false;
+		Forwards forwards = new Forwards();
+
 		try {
-			if(null!=bean) {				
+			if (null != bean) {
+				if(null != bean.getPrimaryKey() && !"".equalsIgnoreCase(bean.getPrimaryKey())) {
+					forwards.setId(Integer.valueOf(bean.getPrimaryKey()));
+				}
 				forwards.setCommodityId(bean.getCommodityId());
 				forwards.setContractDate(bean.getContractDataBean().getContractDate());
 				forwards.setCounterParty(bean.getCounterParty());
@@ -29,27 +32,26 @@ public class ForwardsServiceImpl implements ForwardsService{
 				forwards.setInvestType(bean.getContractDataBean().getTypeOfInvestment());
 				forwards.setStartDate(bean.getStartDate());
 				forwards.setEndDate(bean.getEndDate());
-										
-				if(null != bean.getForwardPrice() && !bean.getForwardPrice().isEmpty()) {
+				forwards.setAck(bean.getAgreementNumber());
+
+				if (null != bean.getForwardPrice() && !bean.getForwardPrice().isEmpty()) {
 					forwards.setForwardPrice((Float.valueOf(bean.getForwardPrice())));
 				}
-				if(null != bean.getSpotPrice() && !bean.getSpotPrice().isEmpty()) {
+				if (null != bean.getSpotPrice() && !bean.getSpotPrice().isEmpty()) {
 					forwards.setSpotPrice((Float.valueOf(bean.getSpotPrice())));
 				}
-				
-				forwardsRepository.save(forwards);
-				isInsert=true;
-				System.out.println("Forwards options save is ::"+isInsert);
 
-				
+				forwardsRepository.save(forwards);
+				isInsert = true;
+				System.out.println("Forwards options save is ::" + isInsert);
+
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(" Exception occurred while saving Forwards :: " + e);
 			e.printStackTrace();
 		}
-		
-		
+
 		return isInsert;
 	}
 
@@ -58,6 +60,12 @@ public class ForwardsServiceImpl implements ForwardsService{
 		// TODO Auto-generated method stub
 		Iterable<Forwards> iterable = forwardsRepository.findAll();
 		return iterable;
-			}
+	}
+	
+	@Override
+	public Forwards getForwardsById(Integer Id) {
+		Forwards f = forwardsRepository.findOne(Id);
+		return f;
+	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.commodity.domain.model.DmCommodityId;
 import com.commodity.domain.model.DmMasterData;
 import com.commodity.domain.model.Forwards;
+import com.commodity.domain.model.Listed;
 import com.commodity.services.DmCommodityIdServices;
 import com.commodity.services.DmMasterDataServices;
 import com.commodity.services.ForwardsService;
@@ -75,6 +76,11 @@ public class ForwardsAction {
 		}
 
 		return forwardsCounterMap;
+	}
+	
+	public Forwards getForwardsById(Integer id) {
+		Forwards f = forwardsService.getForwardsById(id);
+		return f;
 	}
 
 }

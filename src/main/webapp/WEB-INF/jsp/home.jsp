@@ -34,17 +34,17 @@
 
         <div class="row">
           <div class="card">
-            	<div class="boxElem"> <span class="boxElemSpan"><a href="/commodity/commoditydetails/futures">Futures</a></span> </div>
+            	<div class="boxElem"> <span class="boxElemSpan"><a href="/commodity/commoditydetails/getfutures/home">Futures</a></span> </div>
           </div>
           <div class="card">
-            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/listedOptions">Listed Options</a></span> </div>
+            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/getlisted/home">Listed Options</a></span> </div>
           </div>
           <div class="card">
-            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/forwards">Forwards</a> </span></div>
+            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/getforwards/home">Forwards</a> </span></div>
           </div>
 
           <div class="card">
-            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/swaps">Swaps</a></span> </div>
+            <div class="boxElem"><span class="boxElemSpan"><a href="/commodity/commoditydetails/getswaps/home">Swaps</a></span> </div>
           </div>
           <div class="card">
             <div class="boxElem"><span class="boxElemSpan">OTC Options </span></div>
